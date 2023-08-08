@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: My Social Media App
+  description: This is a simple social media app.
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      summary: Login
+      description: This endpoint logs in a user.
+      operationId: routes.login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: The user was logged in successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      email:
+                        type: string
+        '401':
+          description: The user's credentials were incorrect.
+  /register:
+    post:
+      summary: Register
+      description: This endpoint registers a new user.
+      operationId: routes.register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: The user was registered successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      email:
+                        type: string
+        '400':
+          description: The user's credentials were invalid.
