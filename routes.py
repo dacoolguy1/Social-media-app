@@ -34,12 +34,10 @@ from app import app,db,login_manager,bcrypt
 from models import User
 from forms import login_form,register_form
 
-from flask_restx import Resource, Namespace
 # from connexion import App
 #
 
 # from swagger_setup import connexion_app
-ns = Namespace("docs")
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -104,7 +102,6 @@ def index():
 #         btn_action="Login"
 #         )
 @app.route("/login", methods=("POST",), strict_slashes=False)
-@ns.route("/login")
 def login():
     """Authenticate and log in a user."""
     try:
