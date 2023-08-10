@@ -31,3 +31,6 @@ jobs:
 
       - name: Run Flask app
         run: python routes.py
+      - name: Deploy to Render
+        run: |
+          render deploy -- --build-docker
