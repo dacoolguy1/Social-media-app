@@ -28,7 +28,8 @@ def createapp():
     app = Flask(__name__, template_folder='templates')
     
     app.secret_key = 'secret-key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:Eronville2023!@localhost/socialmedia"
+    # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:Eronville2023!@localhost/socialmedia"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
     API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
