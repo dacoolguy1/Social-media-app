@@ -7,6 +7,7 @@ from flask import (
     session,
     request
 )
+import os
 import logging
 from datetime import timedelta
 from sqlalchemy.exc import (
@@ -204,4 +205,5 @@ def logout():
 # Run the app if this script is executed directly
 if __name__ == "__main__":
     # app = createapp()  # Create the app instance here
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
