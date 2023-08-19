@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
@@ -33,6 +34,7 @@ def createapp():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
     API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
+    CORS(app)
 
     
     db.init_app(app=app)
