@@ -157,6 +157,7 @@ def register():
         password = data.get('password')
         firstname = data.get('firstname')
         lastname = data.get("lastname")
+        username = data.get("username")
 
         # Check if the email already exists in the database
         existing_user = User.query.filter_by(email=email).first()
@@ -168,6 +169,7 @@ def register():
             firstname=firstname,
             lastname=lastname,
             email=email,
+            username=username,
             password=bcrypt.generate_password_hash(password),
         )
 
@@ -178,6 +180,22 @@ def register():
     except Exception as e:
         db.session.rollback()
         return {'message': str(e)}, 500
+
+@app.route("/profile", methods=("POST",), strict_slashes=False)
+def profile():
+    """Get User Profile"""
+     # Assuming you have a current_user object from Flask-Login
+    if current_user.is_authenticated:
+        user_data = {
+            'username': current_user.username,  # Replace with the actual attribute name
+            # 'number_of_posts': len(current_user.number_of_posts),  # Replace with the attribute that holds posts
+            'number_of_posts': current_user.number_of_posts,  # Replace with the attribute that holds posts
+            'number_of_adores': current_user.number_of_adores,  # Replace with the actual attribute
+            'profile_description': current_user.profile_description  # Replace with the actual attribute
+        }
+        return user_data, 201
+    else:
+        return {'message': 'User not authenticated'}, 401
 
 # Logout route to log out the user
 @app.route("/logout")

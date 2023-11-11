@@ -10,6 +10,13 @@ class User(UserMixin, db.Model):
     lastname = db.Column(db.String(80), unique = False, nullable = False)
     email = db.Column(db.String(120), unique = True, nullable = False)
     password = db.Column(db.String(300), unique = False, nullable = False)
+    username = db.Column(db.String(80), unique = False, nullable = False)
+    number_of_posts = db.Column(db.String(80), unique = False, nullable = True)
+    number_of_adores = db.Column(db.String(80), unique = False, nullable = True)
+    profile_description = db.Column(db.String(80), unique = False, nullable = True)
+    
+    
+    
     
     def __repr__(self):
         return '<User %r>' % self.email

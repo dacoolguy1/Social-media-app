@@ -72,9 +72,13 @@
                   "firstname": {
                     "type": "string"
                   },
+                  "username": {
+                    "type": "string"
+                  },
                   "lastname": {
                     "type": "string"
                   },
+                  
                   "email": {
                     "type": "string"
                   },
@@ -115,6 +119,68 @@
           }
         }
       }
+   
+    },
+    "/profile": {
+      "post": {
+        "summary": "Shows the User Profile",
+        "description": "This endpoint shows a user Profile.",
+        "operationId": "routes.profile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  }
+                
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The profile was gotten was successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "number_of_posts": {
+                          "type": "string"
+                        },
+                        "number_of_adores": {
+                          "type": "string"
+                        },
+                        "profile_description": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "We were unable to get the user Profile."
+          }
+        }
+      }
+   
     }
+ 
   }
 }
