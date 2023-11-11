@@ -109,18 +109,40 @@ def register():
 @app.route("/profile", methods=("POST",), strict_slashes=False)
 def profile():
     """Get User Profile"""
+    try:
+        data = request.get_json()
+        email = data.get('email')
+
+        # Find the user based on the provided email
+        user = User.query.filter_by(email=email).first()
+
+        if user:
+            user_data = {
+                'username': user.username,
+                'number_of_posts': user.number_of_posts,
+                'number_of_adores': user.number_of_adores,
+                'profile_description': user.profile_description
+            }
+            return user_data, 201
+        else:
+            return {'message': 'User not found'}, 404
+
+    except Exception as e:
+        return {'message': str(e)}, 500
      # Assuming you have a current_user object from Flask-Login
-    if current_user.is_authenticated:
-        user_data = {
-            'username': current_user.username,  # Replace with the actual attribute name
-            # 'number_of_posts': len(current_user.number_of_posts),  # Replace with the attribute that holds posts
-            'number_of_posts': current_user.number_of_posts,  # Replace with the attribute that holds posts
-            'number_of_adores': current_user.number_of_adores,  # Replace with the actual attribute
-            'profile_description': current_user.profile_description  # Replace with the actual attribute
-        }
-        return user_data, 201
-    else:
-        return {'message': 'User not authenticated'}, 401
+     
+     
+    # if current_user.is_authenticated:
+    #     user_data = {
+    #         'username': current_user.username,  # Replace with the actual attribute name
+    #         # 'number_of_posts': len(current_user.number_of_posts),  # Replace with the attribute that holds posts
+    #         'number_of_posts': current_user.number_of_posts,  # Replace with the attribute that holds posts
+    #         'number_of_adores': current_user.number_of_adores,  # Replace with the actual attribute
+    #         'profile_description': current_user.profile_description  # Replace with the actual attribute
+    #     }
+    #     return user_data, 201
+    # else:
+    #     return {'message': 'User not authenticated'}, 401
 
 # Logout route to log out the user
 @app.route("/logout",methods=("GET", ), strict_slashes=False)
