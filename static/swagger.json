@@ -180,7 +180,30 @@
         }
       }
    
+    },
+    "/logout": {
+      "get": {
+        "summary": "Logout",
+        "description": "This endpoint logs out the currently logged-in user.",
+        "operationId": "routes.logout",
+        "responses": {
+          "302": {
+            "description": "The user was logged out successfully.",
+            "headers": {
+              "Location": {
+                "description": "Redirect URL after successful logout.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The user is not authenticated."
+          }
+        }
+      }
     }
- 
+
   }
 }

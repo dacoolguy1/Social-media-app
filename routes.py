@@ -44,30 +44,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 #Create the flask app Instance
 
-
-# SWAGGER_UI_ENABLED = True
-
-# # Create the Connexion app object.
-# connexion_app = App(__name__)
-# connexion_app.app.logger.setLevel(logging.DEBUG)
-# # Add the APIs to the Connexion app object.
-# connexion_app.add_api("swagger.yml")
-
-# Create a route that renders the swagger documentation.
-# @app.route("/docs")
-# def swagger_ui():
-#     # from connexion import App  # Import inside the function
-#     # connexion_app = App(__name__)
-#     # connexion_app.app.logger.setLevel(logging.DEBUG)
-#     # connexion_app.add_api("swagger.yml")
-#     return connexion_app
-#     # return connexion_app.swagger_ui()
-
-
-# @app.route("/api/docs")
-# def swagger_ui():
-    # return swagger(app)
-
 #we are setting the session to be permanent and last for one minuite
 @app.before_request
 def session_handler():
@@ -79,29 +55,6 @@ def index():
     """Render the index page."""
     return render_template("index.html",title="Home")
 
-# Login route for user authentication
-# @app.route("/login/", methods=("GET", "POST"), strict_slashes=False)
-# def login():
-#     """Authenticate and log in a user."""
-#     form = login_form()
-
-#     if form.validate_on_submit():
-#         try:
-#             user = User.query.filter_by(email=form.email.data).first()
-#             if check_password_hash(user.pwd, form.pwd.data):
-#                 login_user(user)
-#                 return redirect(url_for('index'))
-#             else:
-#                 flash("Invalid Username or password!", "danger")
-#         except Exception as e:
-#             flash(e, "danger")
-
-#     return render_template("auth.html",
-#         form=form,
-#         text="Login",
-#         title="Login",
-#         btn_action="Login"
-#         )
 @app.route("/login", methods=("POST",), strict_slashes=False)
 def login():
     """Authenticate and log in a user."""
@@ -120,34 +73,6 @@ def login():
     
 
 
-
-# @app.route("/register", methods=("POST",), strict_slashes=False)
-# def register():
-#     """Register a new user."""
-#     try:
-#         data = request.get_json()
-#         email = data.get('email')
-#         password = data.get('password')
-#         firstname = data.get('firstname')
-#         lastname = data.get("lastname")
-        
-#         newuser = User(
-#             firstname=firstname,
-#             lastname = lastname,
-#             email=email,
-#             password=bcrypt.generate_password_hash(password),
-#             )
-
-#         db.session.add(newuser)
-#         db.session.commit()
-#         return {'message': 'Account Successfully created'}, 201
-
-#     except IntegrityError:
-#         db.session.rollback()
-#         return {'message': 'User already exists!'}, 409
-#     except Exception as e:
-#         db.session.rollback()
-#         return {'message': str(e)}, 500
 @app.route("/register", methods=("POST",), strict_slashes=False)
 def register():
     """Register a new user."""
@@ -198,12 +123,15 @@ def profile():
         return {'message': 'User not authenticated'}, 401
 
 # Logout route to log out the user
-@app.route("/logout")
-@login_required
+@app.route("/logout",methods=("GET", ), strict_slashes=False)
 def logout():
     """Log out the currently logged-in user."""
-    logout_user()
-    return redirect(url_for('login'))
+    if current_user.is_authenticated:
+        logout_user()
+        return {'message': 'You have been logged out sucessfully'}, 201
+    else:
+        return {'message': 'User not authenticated'}, 401
+
 
 # Run the app if this script is executed directly
 if __name__ == "__main__":
