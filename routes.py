@@ -120,6 +120,7 @@ def profile():
             user_data = {
                 'username': user.username,
                 'number_of_posts': user.number_of_posts,
+                'number_of_besties': user.number_of_besties,
                 'number_of_adores': user.number_of_adores,
                 'profile_description': user.profile_description
             }

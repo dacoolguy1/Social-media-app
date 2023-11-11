@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique = False, nullable = False)
     number_of_posts = db.Column(db.String(80), unique = False, nullable = True)
     number_of_adores = db.Column(db.String(80), unique = False, nullable = True)
+    number_of_besties = db.Column(db.String(80), unique = False, nullable = True)
     profile_description = db.Column(db.String(80), unique = False, nullable = True)
     
     
