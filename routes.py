@@ -44,11 +44,11 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 #Create the flask app Instance
 
-#we are setting the session to be permanent and last for one minuite
+#we are setting the session to be permanent and last for ten minuite
 @app.before_request
 def session_handler():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=1)
+    app.permanent_session_lifetime = timedelta(minutes=30)
 # Home Route to render the inex page
 @app.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
