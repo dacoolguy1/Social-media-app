@@ -149,12 +149,10 @@ def profile():
 @app.route("/logout",methods=("GET", ), strict_slashes=False)
 def logout():
     """Log out the currently logged-in user."""
-    if current_user.is_authenticated:
-        logout_user()
-        return {'message': 'You have been logged out sucessfully'}, 201
-    else:
-        return {'message': 'User not authenticated'}, 401
-
+    logout_user()
+    return {'message': 'You have been logged out sucessfully'}, 201
+    
+    
 
 # Run the app if this script is executed directly
 if __name__ == "__main__":
