@@ -34,7 +34,7 @@ def createapp():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
     API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     
     db.init_app(app=app)
