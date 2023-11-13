@@ -164,6 +164,7 @@
                         "number_of_besties": {
                           "type": "string"
                         },
+                       
                         "number_of_adores": {
                           "type": "string"
                         },
