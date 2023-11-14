@@ -1,216 +1,224 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "My Social Media App",
-    "description": "This is a simple social media app.",
-    "version": "1.0.0"
+     "title": "My Social Media App",
+     "description": "This is a simple social media app.",
+     "version": "1.0.0"
+  },
+  "components": {
+     "securitySchemes": {
+        "BearerAuth": {
+           "type": "http",
+           "scheme": "bearer",
+           "bearerFormat": "JWT"
+        }
+     }
   },
   "paths": {
-    "/login": {
-      "post": {
-        "summary": "Login",
-        "description": "This endpoint logs in a user.",
-        "operationId": "routes.login",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The user was logged in successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        }
-                      }
+     "/login": {
+        "post": {
+           "summary": "Login",
+           "description": "This endpoint logs in a user.",
+           "operationId": "routes.login",
+           "requestBody": {
+              "content": {
+                 "application/json": {
+                    "schema": {
+                       "type": "object",
+                       "properties": {
+                          "email": {
+                             "type": "string"
+                          },
+                          "password": {
+                             "type": "string"
+                          }
+                       }
                     }
-                  }
-                }
+                 }
               }
-            }
-          },
-          "401": {
-            "description": "The user's credentials were incorrect."
-          }
-        }
-      }
-    },
-    "/register": {
-      "post": {
-        "summary": "Register",
-        "description": "This endpoint registers a new user.",
-        "operationId": "routes.register",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstname": {
-                    "type": "string"
-                  },
-                  "username": {
-                    "type": "string"
-                  },
-                  "lastname": {
-                    "type": "string"
-                  },
-                  
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The user was registered successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        }
-                      }
+           },
+           "responses": {
+              "200": {
+                 "description": "The user was logged in successfully.",
+                 "content": {
+                    "application/json": {
+                       "schema": {
+                          "type": "object",
+                          "properties": {
+                             "user": {
+                                "type": "object",
+                                "properties": {
+                                   "username": {
+                                      "type": "string"
+                                   },
+                                   "email": {
+                                      "type": "string"
+                                   }
+                                }
+                             }
+                          }
+                       }
                     }
-                  }
-                }
+                 }
+              },
+              "401": {
+                 "description": "The user's credentials were incorrect."
               }
-            }
-          },
-          "400": {
-            "description": "The user's credentials were invalid."
-          }
+           }
         }
-      }
-   
-    },
-    "/profile": {
-      "post": {
-        "summary": "Shows the User Profile",
-        "description": "This endpoint shows a user Profile.",
-        "operationId": "routes.profile",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  }
-                
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The profile was gotten was successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "number_of_posts": {
-                          "type": "string"
-                        },
-                        "number_of_besties": {
-                          "type": "string"
-                        },
-                       
-                        "number_of_adores": {
-                          "type": "string"
-                        },
-                        "profile_description": {
-                          "type": "string"
-                        }
-                      }
+     },
+     "/register": {
+        "post": {
+           "summary": "Register",
+           "description": "This endpoint registers a new user.",
+           "operationId": "routes.register",
+           "requestBody": {
+              "content": {
+                 "application/json": {
+                    "schema": {
+                       "type": "object",
+                       "properties": {
+                          "firstname": {
+                             "type": "string"
+                          },
+                          "username": {
+                             "type": "string"
+                          },
+                          "lastname": {
+                             "type": "string"
+                          },
+                          "email": {
+                             "type": "string"
+                          },
+                          "password": {
+                             "type": "string"
+                          }
+                       }
                     }
-                  }
-                }
+                 }
               }
-            }
-          },
-          "400": {
-            "description": "We were unable to get the user Profile."
-          }
-        }
-      }
-   
-    },
-    "/logout": {
-      "get": {
-        "summary": "Logout",
-        "description": "This endpoint logs out the currently logged-in user.",
-        "operationId": "routes.logout",
-        "responses": {
-          "302": {
-            "description": "The user was logged out successfully.",
-            "headers": {
-              "Location": {
-                "description": "Redirect URL after successful logout.",
-                "schema": {
-                  "type": "string"
-                }
+           },
+           "responses": {
+              "201": {
+                 "description": "The user was registered successfully.",
+                 "content": {
+                    "application/json": {
+                       "schema": {
+                          "type": "object",
+                          "properties": {
+                             "user": {
+                                "type": "object",
+                                "properties": {
+                                   "username": {
+                                      "type": "string"
+                                   },
+                                   "email": {
+                                      "type": "string"
+                                   }
+                                }
+                             }
+                          }
+                       }
+                    }
+                 }
+              },
+              "400": {
+                 "description": "The user's credentials were invalid."
               }
-            }
-          },
-          "401": {
-            "description": "The user is not authenticated."
-          },
-          "405": {
-            "description": "The user is not authenticated kindly login."
-          }
+           }
         }
-      }
-    }
-
+     },
+     "/profile": {
+        "post": {
+           "summary": "Shows the User Profile",
+           "description": "This endpoint shows a user Profile.",
+           "operationId": "routes.profile",
+           "security": [
+              {
+                 "BearerAuth": []
+              }
+           ],
+           "requestBody": {
+              "content": {
+                 "application/json": {
+                    "schema": {
+                       "type": "object",
+                       "properties": {
+                          "email": {
+                             "type": "string"
+                          }
+                       }
+                    }
+                 }
+              }
+           },
+           "responses": {
+              "201": {
+                 "description": "The profile was gotten was successfully.",
+                 "content": {
+                    "application/json": {
+                       "schema": {
+                          "type": "object",
+                          "properties": {
+                             "user": {
+                                "type": "object",
+                                "properties": {
+                                   "username": {
+                                      "type": "string"
+                                   },
+                                   "email": {
+                                      "type": "string"
+                                   },
+                                   "number_of_posts": {
+                                      "type": "string"
+                                   },
+                                   "number_of_besties": {
+                                      "type": "string"
+                                   },
+                                   "number_of_adores": {
+                                      "type": "string"
+                                   },
+                                   "profile_description": {
+                                      "type": "string"
+                                   }
+                                }
+                             }
+                          }
+                       }
+                    }
+                 }
+              },
+              "400": {
+                 "description": "We were unable to get the user Profile."
+              }
+           }
+        }
+     },
+     "/logout": {
+        "get": {
+           "summary": "Logout",
+           "description": "This endpoint logs out the currently logged-in user.",
+           "operationId": "routes.logout",
+           "responses": {
+              "302": {
+                 "description": "The user was logged out successfully.",
+                 "headers": {
+                    "Location": {
+                       "description": "Redirect URL after successful logout.",
+                       "schema": {
+                          "type": "string"
+                       }
+                    }
+                 }
+              },
+              "401": {
+                 "description": "The user is not authenticated."
+              },
+              "405": {
+                 "description": "The user is not authenticated kindly login."
+              }
+           }
+        }
+     }
   }
 }

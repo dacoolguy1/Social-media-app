@@ -7,6 +7,7 @@ from flask import (
     session,
     request
 )
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 import os
 import logging
 from datetime import timedelta
@@ -64,8 +65,9 @@ def login():
         password = data.get('password')
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
-            login_user(user,force=True)
-            return {'message': 'Logged in successfully'}, 200
+            login_user(user)
+            token = create_access_token(identity=user.to_dict())
+            return {'message': 'Logged in successfully','token': token}, 200
         else:
             return {'message': 'Invalid Username or password'}, 401
     except Exception as e:
@@ -107,7 +109,7 @@ def register():
         return {'message': str(e)}, 500
 
 @app.route("/profile", methods=("POST",))
-
+@jwt_required()
 def profile():
     """Get User Profile"""
     # try:
@@ -133,7 +135,7 @@ def profile():
     #     return {'message': str(e)}, 500
      # Assuming you have a current_user object from Flask-Login .
      
-     
+    user = get_jwt_identity()
     if current_user.is_authenticated:
         user_data = {
             'username': current_user.username,  # Replace with the actual attribute name
@@ -142,7 +144,7 @@ def profile():
             'number_of_adores': current_user.number_of_adores,  # Replace with the actual attribute
             'profile_description': current_user.profile_description  # Replace with the actual attribute
         }
-        return user_data, 201
+        return user_data, 201, user
     else:
         return {'message': 'User not authenticated'}, 401
 

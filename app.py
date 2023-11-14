@@ -13,7 +13,10 @@ from flask_login import (
     logout_user,
     login_required
 )
-
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 # create an instance of LoginManager
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -29,6 +32,9 @@ def createapp():
     app = Flask(__name__, template_folder='templates')
     
     app.secret_key = 'secret-key'
+    # Setup the Flask-JWT-Extended extension
+    app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+    jwt = JWTManager(app)
     # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:Eronville2023!@localhost/socialmedia"
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -46,7 +52,7 @@ def createapp():
     SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
     API_URL,
     config={  # Swagger UI config overrides
-        'app_name': "Test application"
+        'app_name': "Femi And Ese Social Media App"
     },
     # oauth_config={  # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
     #    'clientId': "your-client-id",
