@@ -204,6 +204,9 @@
           },
           "401": {
             "description": "The user is not authenticated."
+          },
+          "405": {
+            "description": "The user is not authenticated kindly login."
           }
         }
       }

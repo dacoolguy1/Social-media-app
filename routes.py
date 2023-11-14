@@ -55,7 +55,7 @@ def index():
     """Render the index page."""
     return render_template("index.html",title="Home")
 
-@app.route("/login", methods=("POST",), strict_slashes=False)
+@app.route("/login", methods=("POST",))
 def login():
     """Authenticate and log in a user."""
     try:
@@ -73,7 +73,7 @@ def login():
     
 
 
-@app.route("/register", methods=("POST",), strict_slashes=False)
+@app.route("/register", methods=("POST",))
 def register():
     """Register a new user."""
     try:
@@ -106,7 +106,7 @@ def register():
         db.session.rollback()
         return {'message': str(e)}, 500
 
-@app.route("/profile", methods=("POST",), strict_slashes=False)
+@app.route("/profile", methods=("POST",))
 @login_required
 def profile():
     """Get User Profile"""
@@ -147,7 +147,7 @@ def profile():
         return {'message': 'User not authenticated'}, 401
 
 # Logout route to log out the user
-@app.route("/logout",methods=("GET", ), strict_slashes=False)
+@app.route("/logout",methods=("GET", ))
 @login_required
 def logout():
     """Log out the currently logged-in user."""
