@@ -64,7 +64,7 @@ def login():
         password = data.get('password')
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
-            login_user(user)
+            login_user(user,force=True)
             return {'message': 'Logged in successfully'}, 200
         else:
             return {'message': 'Invalid Username or password'}, 401
