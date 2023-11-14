@@ -107,7 +107,7 @@ def register():
         return {'message': str(e)}, 500
 
 @app.route("/profile", methods=("POST",))
-@login_required
+
 def profile():
     """Get User Profile"""
     # try:
@@ -148,7 +148,7 @@ def profile():
 
 # Logout route to log out the user
 @app.route("/logout",methods=("GET", ))
-@login_required
+
 def logout():
     """Log out the currently logged-in user."""
     
