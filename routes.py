@@ -131,7 +131,7 @@ def profile():
 
     # except Exception as e:
     #     return {'message': str(e)}, 500
-     # Assuming you have a current_user object from Flask-Login
+     # Assuming you have a current_user object from Flask-Login .
      
      
     if current_user.is_authenticated:
