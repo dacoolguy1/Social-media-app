@@ -109,7 +109,6 @@ def register():
         return {'message': str(e)}, 500
 
 @app.route("/profile", methods=("POST",))
-@login_required
 @jwt_required()
 def profile():
     """Get User Profile"""
@@ -166,7 +165,6 @@ def profile():
 
 # Logout route to log out the user
 @app.route("/logout",methods=("GET", ))
-@login_required
 @jwt_required()
 def logout():
     """Log out the currently logged-in user."""
