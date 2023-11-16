@@ -199,6 +199,11 @@
            "summary": "Logout",
            "description": "This endpoint logs out the currently logged-in user.",
            "operationId": "routes.logout",
+           "security": [
+            {
+               "BearerAuth": []
+            }
+         ],
            "responses": {
               "302": {
                  "description": "The user was logged out successfully.",

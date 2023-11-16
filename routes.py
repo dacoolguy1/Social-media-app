@@ -109,6 +109,7 @@ def register():
         return {'message': str(e)}, 500
 
 @app.route("/profile", methods=("POST",))
+@login_required
 @jwt_required()
 def profile():
     """Get User Profile"""
@@ -142,6 +143,7 @@ def profile():
             user_data = {
                 'username': user.username,
                 'number_of_posts': user.number_of_posts,
+                'number_of_besties': user.number_of_besties,
                 'number_of_adores': user.number_of_adores,
                 'profile_description': user.profile_description
             }
@@ -164,16 +166,28 @@ def profile():
 
 # Logout route to log out the user
 @app.route("/logout",methods=("GET", ))
-
+@login_required
+@jwt_required()
 def logout():
     """Log out the currently logged-in user."""
+    try:
+        user_id = get_jwt_identity().get("id")
+        user = User.query.get(user_id)
+
+        if user:
+             logout_user()
+             return {'message': 'You have been logged out sucessfully'}, 201
+        else:
+            return {'message': 'User not found'}, 404
+    except Exception as e:
+            return {'message': str(e)}, 500
+   
     
-    if current_user.is_authenticated:
-        logout_user()
-        return {'message': 'You have been logged out sucessfully'}, 201
-    else:
+    # if current_user.is_authenticated:
+       
+    # else:
         
-        return {'message': 'User not authenticated'}, 401
+    #     return {'message': 'User not authenticated'}, 401
     
 
 # Run the app if this script is executed directly
