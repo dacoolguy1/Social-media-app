@@ -347,6 +347,193 @@
         }
       }
     },
+    "/getposts": {
+      "get": {
+        "summary": "Get all posts",
+        "operationId": "get_all_posts",
+        "responses": {
+          "200": {
+            "description": "Posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "post_id": { "type": "integer" },
+                          "username": { "type": "string" },
+                          "post_description": { "type": "string" },
+                          "post_created_time": { "type": "string", "format": "date-time" },
+                          "post_images": {
+                            "type": "array",
+                            "items": { "type": "string", "format": "uri" }
+                          },
+                          "post_comments": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "comment_text": { "type": "string" },
+                                "comment_time": { "type": "string", "format": "date-time" },
+                                "comment_user": { "type": "string" }
+                              }
+                            }
+                          },
+                          "post_likes": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                          }
+                        }
+
+                     
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/getpost/{post_id}": {
+      "get": {
+        "summary": "Get post by ID",
+        "operationId": "get_post_by_id",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": { "type": "integer" },
+                    "username": { "type": "string" },
+                    "post_description": { "type": "string" },
+                    "post_created_time": { "type": "string", "format": "date-time" },
+                    "post_images": {
+                      "type": "array",
+                      "items": { "type": "string", "format": "uri" }
+                    },
+                    "post_comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "comment_text": { "type": "string" },
+                          "comment_time": { "type": "string", "format": "date-time" },
+                          "comment_user": { "type": "string" }
+                        }
+                      }
+                    },
+                    "post_likes": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/getpostsbyuser/{username}": {
+      "get": {
+        "summary": "Get posts by user",
+        "operationId": "get_posts_by_user",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "post_id": { "type": "integer" },
+                          "username": { "type": "string" },
+                          "post_description": { "type": "string" },
+                          "post_created_time": { "type": "string", "format": "date-time" },
+                          "post_images": {
+                            "type": "array",
+                            "items": { "type": "string", "format": "uri" }
+                          },
+                          "post_comments": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "comment_text": { "type": "string" },
+                                "comment_time": { "type": "string", "format": "date-time" },
+                                "comment_user": { "type": "string" }
+                              }
+                            }
+                          },
+                          "post_likes": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                          }
+                        } }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
      "/logout": {
         "get": {
            "summary": "Logout",

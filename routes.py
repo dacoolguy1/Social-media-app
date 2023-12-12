@@ -243,6 +243,41 @@ def createpost():
 
     except Exception as e:
         return {"message": str(e)}, 500
+@app.route("/getposts", methods=["GET"])
+def get_all_posts():
+    try:
+        posts = Post.query.all()
+        posts_data = [post.to_dict() for post in posts]
+        return {"message": "Posts retrieved successfully", "posts": posts_data}, 200
+
+    except Exception as e:
+        return {"message": str(e)}, 500
+
+@app.route("/getpost/<int:post_id>", methods=["GET"])
+def get_post_by_id(post_id):
+    try:
+        post = Post.query.get(post_id)
+        if post:
+            return {"message": "Post retrieved successfully", "post": post.to_dict()}, 200
+        else:
+            return {"message": "Post not found"}, 404
+
+    except Exception as e:
+        return {"message": str(e)}, 500
+
+@app.route("/getpostsbyuser/<string:username>", methods=["GET"])
+def get_posts_by_user(username):
+    try:
+        user = User.query.filter_by(username=username).first()
+        if user:
+            posts = Post.query.filter_by(user_id=user.id).all()
+            posts_data = [post.to_dict() for post in posts]
+            return {"message": "Posts retrieved successfully", "posts": posts_data}, 200
+        else:
+            return {"message": "User not found"}, 404
+
+    except Exception as e:
+        return {"message": str(e)}, 500
 # Logout route to log out the user
 @app.route("/logout",methods=("GET", ))
 @jwt_required()
