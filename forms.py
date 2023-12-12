@@ -26,6 +26,10 @@ class login_form(FlaskForm):
         validators=[Optional()]
     )
 
+# forms.py
+class EditProfileForm(FlaskForm):
+    username = StringField(validators=[Optional(), Length(3, 20)])
+    bio = TextAreaField(validators=[Optional(), Length(max=120)])
 
 class register_form(FlaskForm):
     # # )username = StringField(

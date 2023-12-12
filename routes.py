@@ -1,3 +1,4 @@
+import datetime
 from flask import (
     Flask,
     render_template,
@@ -33,8 +34,8 @@ from flask_login import (
 )
 
 from app import app,db,login_manager,bcrypt
-from models import User
-from forms import login_form,register_form
+from models import Comment, Post, User
+from forms import EditProfileForm, login_form,register_form
 
 # from connexion import App
 #
@@ -162,7 +163,86 @@ def profile():
     #     return user_data, 201, user
     # else:
     #     return {'message': 'User not authenticated'}, 401
+@app.route("/editprofile", methods=["POST"])
+@jwt_required()
+def editprofile():
+    try:
+        user_id = get_jwt_identity().get("id")
+        user = User.query.get(user_id)
 
+        if not user:
+            return {"message": "User not found"}, 404
+
+        form = EditProfileForm(request.form)
+        data = request.get_json()
+        if 'username' not in data or 'bio' not in data:
+            return {"message": "Username and bio are required fields"}, 400
+        username = data.get('username')
+        bio = data.get('bio')
+        if user:
+            user.username = username
+            user.profile_description = bio
+            user_data_updated = {
+                'username': user.username,
+                'profile_description': user.profile_description
+            }
+
+            db.session.commit()
+
+            return {"message": "Profile updated successfully", "user":  user_data_updated}, 200
+        else:
+            return {'message': 'Invalid Username or password'}, 401
+            
+     
+    except Exception as e:
+        return {"message": str(e)}, 500
+@app.route("/createpost", methods=["POST"])
+@jwt_required()
+def createpost():
+    try:
+        user_id = get_jwt_identity().get("id")
+        user = User.query.get(user_id)
+        
+        if not user:
+            return {"message": "User not found"}, 404
+
+        data = request.get_json()
+        post_description = data.get('post_description')
+        post_created_time = datetime.datetime.now()
+        post_images = data.get('post_images', [])
+        post_comments = data.get('post_comments', [])
+        post_likes = data.get('post_likes', [])
+        username = user.username
+
+        new_post = Post(
+            post_description=post_description,
+            post_created_time=post_created_time,
+            post_images=post_images,
+            post_likes=post_likes,
+            user_id=user_id,  # Add user_id to the new_post object
+            username  = username
+            # author=user,
+        )
+
+        db.session.add(new_post)
+        db.session.commit()
+
+        # Add comments to the post
+        for comment_data in post_comments:
+            comment = Comment(
+                comment_text=comment_data.get('comment_text'),
+                comment_time=datetime.datetime.now(),
+                comment_user=comment_data.get('comment_user'),
+                post=new_post,
+            )
+            db.session.add(comment)
+
+        db.session.commit()
+
+        return {"message": "Post created successfully", "post": new_post.to_dict()}, 201
+
+    except Exception as e:
+        return {"message": str(e)}, 500
 # Logout route to log out the user
 @app.route("/logout",methods=("GET", ))
 @jwt_required()

@@ -194,6 +194,159 @@
            }
         }
      },
+     "/editprofile": {
+      "post": {
+         "summary": "Edit the User Profile",
+         "description": "This endpoint allows you to edit a user Profile.",
+         "operationId": "routes.editprofile",
+         "security": [
+            {
+               "BearerAuth": []
+            }
+         ],
+         "requestBody": {
+            "content": {
+               "application/json": {
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                         "username": {
+                           "type": "string"
+                        },
+                        "bio": {
+                           "type": "string"
+                        }
+                    
+                     }
+                  }
+               }
+            }
+         },
+         "responses": {
+            "201": {
+               "description": "The profile was updated successfully.",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "user": {
+                              "type": "object",
+                              "properties": {
+                                 "username": {
+                                    "type": "string"
+                                 },
+                                 "email": {
+                                    "type": "string"
+                                 },
+                                 "number_of_posts": {
+                                    "type": "string"
+                                 },
+                                 "number_of_besties": {
+                                    "type": "string"
+                                 },
+                                 "number_of_adores": {
+                                    "type": "string"
+                                 },
+                                 "profile_description": {
+                                    "type": "string"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "400": {
+               "description": "We were unable to update the user Profile."
+            }
+         }
+      }
+   },
+   "/createpost": {
+      "post": {
+        "summary": "Create a Post",
+        "description": "This endpoint allows a user to create a new post.",
+        "operationId": "routes.createpost",
+        "security": [
+          { "BearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "post_description": { "type": "string" },
+                  "post_created_time": { "type": "string", "format": "date-time" },
+                  "post_images": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "uri" }
+                  },
+                  "post_comments": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "comment_text": { "type": "string" },
+                        "comment_time": { "type": "string", "format": "date-time" },
+                        "comment_user": { "type": "string" }
+                      }
+                    }
+                  },
+                  "post_likes": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The post was created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": { "type": "integer" },
+                    "username": { "type": "string" },
+                    "post_description": { "type": "string" },
+                    "post_created_time": { "type": "string", "format": "date-time" },
+                    "post_images": {
+                      "type": "array",
+                      "items": { "type": "string", "format": "uri" }
+                    },
+                    "post_comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "comment_text": { "type": "string" },
+                          "comment_time": { "type": "string", "format": "date-time" },
+                          "comment_user": { "type": "string" }
+                        }
+                      }
+                    },
+                    "post_likes": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to create the post."
+          }
+        }
+      }
+    },
      "/logout": {
         "get": {
            "summary": "Logout",
