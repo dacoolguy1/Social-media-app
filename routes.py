@@ -50,7 +50,7 @@ def load_user(user_id):
 @app.before_request
 def session_handler():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=30)
+    app.permanent_session_lifetime = timedelta(minutes=60)
 # Home Route to render the inex page
 @app.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
