@@ -138,6 +138,10 @@ def profile():
     try:
         user_id = get_jwt_identity().get("id")
         user = User.query.get(user_id)
+        posts = Post.query.all()
+        posts_data = [post.to_dict() for post in posts]
+        user.number_of_posts =  len(posts_data)
+ 
 
         if user:
             user_data = {
